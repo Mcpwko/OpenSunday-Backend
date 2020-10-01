@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  api:
+    ports:
+      - 8080:80
+
+  # NOTE - Comment this part if you have your own instance of SQL server running
+  db:
+    ports:
+      - 1433:1433

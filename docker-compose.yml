@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  api:
+    build: .
+    environment:
+      - DbConnection=Server=db;Database=${DB_NAME};User Id=sa;Password=${SA_PASSWORD}
+    depends_on:
+      - db
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-CU6-ubuntu-18.04
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
+      - SA_PASSWORD=${SA_PASSWORD}

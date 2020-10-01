@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+  api:
+    labels:
+      - "traefik.backend=${TRAEFIK_BACKEND}"
+      - "traefik.docker.network=prod"
+      - "traefik.frontend.rule=Host:${TRAEFIK_URL}"
+      - "traefik.enable=true"
+    networks:
+      - default
+      - prod
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  db:
+    ports:
+      - ${SQLSERVER_PORT}:1433
+    volumes:
+      - db-volume:/var/opt/mssql
+
+networks:
+  prod:
+    external: true
+    name: ${TRAEFIK_NETWORK}
+
+volumes:
+  db-volume:
