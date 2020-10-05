@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using opensunday_backend.Models;
 using OpenSundayApi.Models;
 
 namespace OpenSundayApi.Controllers
@@ -50,7 +51,7 @@ namespace OpenSundayApi.Controllers
     [HttpPut("{id}")]
     public async Task<IActionResult> PutLocation(long id, Location location)
     {
-      if (id != location.Id)
+      if (id != location.IdLocation)
       {
         return BadRequest();
       }
@@ -80,15 +81,13 @@ namespace OpenSundayApi.Controllers
     #region snippet_Create
     // POST: api/Locations
     [HttpPost]
-    public async Task<ActionResult<Location>> PostLocation(Location location)
+    public async Task<ActionResult<Location>> PostReview(Location location)
     {
-      // Add creator ID based on the Auth0 User ID found in the JWT token
-      location.Creator = User.Claims.First(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
-
+      
       _context.Locations.Add(location);
       await _context.SaveChangesAsync();
 
-      return CreatedAtAction(nameof(GetLocation), new { id = location.Id }, location);
+      return CreatedAtAction(nameof(GetLocation), new { id = location.IdLocation }, location);
     }
     #endregion
 
@@ -112,7 +111,7 @@ namespace OpenSundayApi.Controllers
 
     private bool LocationExists(long id)
     {
-      return _context.Locations.Any(e => e.Id == id);
+      return _context.Locations.Any(e => e.IdLocation == id);
     }
   }
 }
