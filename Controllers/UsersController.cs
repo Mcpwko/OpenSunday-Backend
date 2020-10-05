@@ -10,53 +10,53 @@ using OpenSundayApi.Models;
 
 namespace OpenSundayApi.Controllers
 {
-  #region CategoryController
+  #region UserController
   [Route("api/[controller]")]
   [ApiController]
-  public class CategoryController : ControllerBase
+  public class UserController : ControllerBase
   {
     private readonly OpenSundayContext _context;
 
-    public CategoryController(OpenSundayContext context)
+    public UserController(OpenSundayContext context)
     {
       _context = context;
     }
     #endregion
 
-    // GET: api/Categories
+    // GET: api/Users
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+    public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
-      return await _context.Categories.ToListAsync();
+      return await _context.Users.ToListAsync();
     }
 
     #region snippet_GetByID
-    // GET: api/Categories/5
+    // GET: api/Users/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Category>> GetCategory(long id)
+    public async Task<ActionResult<User>> GetUser(long id)
     {
-      var category = await _context.Categories.FindAsync(id);
+      var user = await _context.Users.FindAsync(id);
 
-      if (category == null)
+      if (user == null)
       {
         return NotFound();
       }
 
-      return category;
+      return user;
     }
     #endregion
 
     #region snippet_Update
-    // PUT: api/Category/5
+    // PUT: api/User/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutCategory(long id, Category category)
+    public async Task<IActionResult> PutUser(long id, User user)
     {
-      if (id != category.IdCategory)
+      if (id != user.IdUser)
       {
         return BadRequest();
       }
 
-      _context.Entry(category).State = EntityState.Modified;
+      _context.Entry(user).State = EntityState.Modified;
 
       try
       {
@@ -64,7 +64,7 @@ namespace OpenSundayApi.Controllers
       }
       catch (DbUpdateConcurrencyException)
       {
-        if (!CategoryExists(id))
+        if (!UserExists(id))
         {
           return NotFound();
         }
@@ -81,13 +81,13 @@ namespace OpenSundayApi.Controllers
     #region snippet_Create
     // POST: api/Cateogries
     [HttpPost]
-    public async Task<ActionResult<Category>> PostCategory(Category category)
+    public async Task<ActionResult<User>> PostUser(User user)
     {
 
-      _context.Categories.Add(category);
+      _context.Users.Add(user);
       await _context.SaveChangesAsync();
 
-      return CreatedAtAction(nameof(GetCategory), new { id = category.IdCategory }, category);
+      return CreatedAtAction(nameof(GetUser), new { id = user.IdUser }, user);
     }
     #endregion
 
@@ -109,9 +109,9 @@ namespace OpenSundayApi.Controllers
     }
     #endregion
 
-    private bool CategoryExists(long id)
+    private bool UserExists(long id)
     {
-      return _context.Categories.Any(e => e.IdCategory == id);
+      return _context.Users.Any(e => e.IdUser == id);
     }
   }
 }

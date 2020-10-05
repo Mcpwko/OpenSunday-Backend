@@ -82,7 +82,7 @@ namespace OpenSundayApi.Controllers
     #region snippet_Create
     // POST: api/Types
     [HttpPost]
-    public async Task<ActionResult<Type>> PostReview(Type type)
+    public async Task<ActionResult<Type>> PostType(Type type)
     {
       
       _context.Types.Add(type);

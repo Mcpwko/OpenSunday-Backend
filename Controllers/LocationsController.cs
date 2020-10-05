@@ -81,7 +81,7 @@ namespace OpenSundayApi.Controllers
     #region snippet_Create
     // POST: api/Locations
     [HttpPost]
-    public async Task<ActionResult<Location>> PostReview(Location location)
+    public async Task<ActionResult<Location>> PostLocation(Location location)
     {
       
       _context.Locations.Add(location);

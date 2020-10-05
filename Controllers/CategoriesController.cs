@@ -94,18 +94,18 @@ namespace OpenSundayApi.Controllers
     #region snippet_Delete
     // DELETE: api/Users/5
     [HttpDelete("{id}")]
-    public async Task<ActionResult<User>> DeleteUser(long id)
+    public async Task<ActionResult<User>> DeleteCategory(long id)
     {
-      var user = await _context.Users.FindAsync(id);
-      if (user == null)
+      var category = await _context.Categories.FindAsync(id);
+      if (category == null)
       {
         return NotFound();
       }
 
-      _context.Users.Remove(user);
+      _context.Categories.Remove(category);
       await _context.SaveChangesAsync();
 
-      return user;
+      return category;
     }
     #endregion
 
