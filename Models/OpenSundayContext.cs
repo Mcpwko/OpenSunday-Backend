@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using opensunday_backend.Models;
+using System.Security.Cryptography.X509Certificates;
 
 namespace OpenSundayApi.Models
 {
@@ -16,5 +17,6 @@ namespace OpenSundayApi.Models
         public DbSet<Type> Types { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Review> Reviews { get; set; }
+       
     }
 }

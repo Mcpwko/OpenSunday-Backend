@@ -11,5 +11,7 @@ namespace opensunday_backend.Models
         [Key]
         public long IdUserType { get; set; }
         public string Name { get; set; }
+
+        public virtual ICollection<User> UserSet { get; set; }
     }
 }

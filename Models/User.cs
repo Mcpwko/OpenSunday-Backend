@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace opensunday_backend.Models
 {
@@ -15,8 +16,17 @@ namespace opensunday_backend.Models
         public DateTime CreatedAt { get; set; }
         public int Status { get; set; }
         public string IdAuth0 { get; set; }
-        [ForeignKey("IdUserType")]
-        public int IdUserType { get; set; }
+
+        
+
+        [JsonIgnore]
+        public virtual ICollection<Review> ReviewSet { get; set; }
+
+        [ForeignKey("UserTypeSet")]
+        public long IdUserType { get; set; }
+        public virtual UserType UserTypeSet { get; set; }
+        
+
 
     }
 }

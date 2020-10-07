@@ -1,6 +1,9 @@
+using opensunday_backend.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Type = opensunday_backend.Models.Type;
 
 public class Place
 {
@@ -13,14 +16,26 @@ public class Place
     public string PhoneNumber { get; set; }
     public DateTime CreateAt { get; set; }
     public bool IsOpenSunday { get; set; }
-    public bool IsOpenSpecialDay { get; set;}
+    public bool IsOpenSpecialDay { get; set; }
     public bool IsVerified { get; set; }
     public bool IsAdvertised { get; set; }
-    [ForeignKey("IdLocation")]
-    public long IdLocation { get; set; }
-    [ForeignKey("IdType")]
-    public long IdType { get; set; }
-    [ForeignKey("IdCategory")]
-    public long IdCategory { get; set; }
     public string Creator { get; set; }
+
+    public virtual ICollection<Review> ReviewSet { get; set; }
+
+    [ForeignKey("LocationSet")]
+    public long IdLocation { get; set; }
+    public virtual Location LocationSet { get; set; }
+    
+
+    [ForeignKey("CategorySet")]
+    public long IdCategory { get; set; }
+    public virtual Category CategorySet { get; set; }
+    
+
+    [ForeignKey("TypeSet")]
+    public long IdType { get; set; }
+    public virtual Type TypeSet { get; set; }
+    
+
 }

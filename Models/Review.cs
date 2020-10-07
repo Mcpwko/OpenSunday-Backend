@@ -13,9 +13,13 @@ namespace opensunday_backend.Models
         public long IdReview { get; set; }
         public int Text { get; set; }
         public string Comment { get; set; }
-        [ForeignKey("IdUser")]
+        
+        [ForeignKey("UserSet")]
         public long IdUser { get; set; }
-        [ForeignKey("IdPlace")]
+        public virtual User UserSet { get; set; }
+
+        [ForeignKey("PlaceSet")]
         public long IdPlace { get; set; }
+        public virtual Place PlaceSet { get; set; }
     }
 }

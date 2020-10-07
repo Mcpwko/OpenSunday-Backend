@@ -92,9 +92,9 @@ namespace OpenSundayApi.Controllers
     #endregion
 
     #region snippet_Delete
-    // DELETE: api/Users/5
+    // DELETE: api/Categories/5
     [HttpDelete("{id}")]
-    public async Task<ActionResult<User>> DeleteCategory(long id)
+    public async Task<ActionResult<Category>> DeleteCategory(long id)
     {
       var category = await _context.Categories.FindAsync(id);
       if (category == null)

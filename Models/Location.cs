@@ -14,9 +14,17 @@ namespace opensunday_backend.Models
         public long Lat { get; set; }
         public long Long { get; set; }
         public string Address { get; set; }
-        [ForeignKey("IdCity")]
+
+        public virtual ICollection<Place> PlaceSet { get; set; }
+
+        [ForeignKey("CitySet")]
         public long IdCity { get; set; }
-        [ForeignKey("IdRegion")]
+        public virtual City CitySet { get; set; }
+        
+
+        [ForeignKey("RegionSet")]
         public long IdRegion { get; set; }
+        public virtual Region RegionSet { get; set; }
+        
     }
 }
