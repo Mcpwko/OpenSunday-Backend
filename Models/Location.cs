@@ -11,8 +11,8 @@ namespace opensunday_backend.Models
     {
         [Key]
         public long IdLocation { get; set; }
-        public long Lat { get; set; }
-        public long Long { get; set; }
+        public float Lat { get; set; }
+        public float Long { get; set; }
         public string Address { get; set; }
 
         public virtual ICollection<Place> PlaceSet { get; set; }

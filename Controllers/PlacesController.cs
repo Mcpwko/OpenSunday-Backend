@@ -84,6 +84,7 @@ namespace OpenSundayApi.Controllers
     {
       // Add creator ID based on the Auth0 User ID found in the JWT token
       place.Creator = User.Claims.First(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+      place.CreateAt = DateTime.Now;
 
       _context.Places.Add(place);
       await _context.SaveChangesAsync();
