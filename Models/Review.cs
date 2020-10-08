@@ -11,7 +11,7 @@ namespace opensunday_backend.Models
     {
         [Key]
         public long IdReview { get; set; }
-        public int Text { get; set; }
+        public int Rate { get; set; }
         public string Comment { get; set; }
         
         [ForeignKey("UserSet")]

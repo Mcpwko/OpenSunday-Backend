@@ -10,14 +10,14 @@ using OpenSundayApi.Models;
 
 namespace OpenSundayApi.Controllers
 {
-  #region UserController
+  #region UsersController
   [Route("api/[controller]")]
   [ApiController]
-  public class UserController : ControllerBase
+  public class UsersController : ControllerBase
   {
     private readonly OpenSundayContext _context;
 
-    public UserController(OpenSundayContext context)
+    public UsersController(OpenSundayContext context)
     {
       _context = context;
     }
@@ -79,11 +79,13 @@ namespace OpenSundayApi.Controllers
     #endregion
 
     #region snippet_Create
-    // POST: api/Cateogries
+    // POST: api/Users
     [HttpPost]
     public async Task<ActionResult<User>> PostUser(User user)
     {
 
+      user.CreatedAt = DateTime.Now;
+      user.Status = 0;
       _context.Users.Add(user);
       await _context.SaveChangesAsync();
 
