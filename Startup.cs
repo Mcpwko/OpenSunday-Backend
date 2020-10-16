@@ -37,6 +37,10 @@ namespace opensunday_backend
                     .AllowAnyHeader();
             }));
 
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddControllers();
 
             // Configure authentication using JWT tokens

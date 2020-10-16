@@ -27,22 +27,23 @@ namespace OpenSundayApi.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
-      return await _context.Users.ToListAsync();
+      return await _context.Users.Include(user => user.UserTypeSet).ToListAsync();
     }
 
     #region snippet_GetByID
-    // GET: api/Users/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUser(long id)
+    // GET: api/Users/email
+    [HttpGet("{email}")]
+    public async Task<ActionResult<User>> GetUser(string email)
     {
-      var user = await _context.Users.FindAsync(id);
+      var users = await _context.Users.ToListAsync();
+      var user = users.Where(x => x.Email.Equals(email));
 
       if (user == null)
       {
         return NotFound();
       }
 
-      return user;
+      return user.First();
     }
     #endregion
 

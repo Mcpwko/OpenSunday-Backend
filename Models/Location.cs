@@ -15,7 +15,7 @@ namespace opensunday_backend.Models
         public float Long { get; set; }
         public string Address { get; set; }
 
-        public virtual ICollection<Place> PlaceSet { get; set; }
+        public virtual ICollection<Place> Place { get; set; }
 
         [ForeignKey("CitySet")]
         public long IdCity { get; set; }

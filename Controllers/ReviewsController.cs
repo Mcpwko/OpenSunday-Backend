@@ -27,7 +27,8 @@ namespace OpenSundayApi.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
     {
-      return await _context.Reviews.ToListAsync();
+      return await _context.Reviews.Include(review => review.PlaceSet)
+                .Include(review => review.UserSet).ToListAsync();
     }
 
     #region snippet_GetByID

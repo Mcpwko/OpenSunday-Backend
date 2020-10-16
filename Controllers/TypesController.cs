@@ -28,7 +28,7 @@ namespace OpenSundayApi.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Type>>> GetTypes()
     {
-      return await _context.Types.ToListAsync();
+      return await _context.Types.Include(type => type.PlaceSet).ToListAsync();
     }
 
     #region snippet_GetByID

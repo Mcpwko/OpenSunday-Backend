@@ -27,7 +27,7 @@ namespace OpenSundayApi.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<City>>> GetCities()
     {
-      return await _context.Cities.ToListAsync();
+      return await _context.Cities.Include(city =>city.LocationSet).ToListAsync();
     }
 
     #region snippet_GetByID

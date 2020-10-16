@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using opensunday_backend.Models;
-using System.Security.Cryptography.X509Certificates;
 
 namespace OpenSundayApi.Models
 {
@@ -17,6 +16,26 @@ namespace OpenSundayApi.Models
         public DbSet<Type> Types { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Review> Reviews { get; set; }
-       
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            // mapping many to many relationship
+            modelBuilder.Entity<Location>()
+                .HasOne(x => x.RegionSet)
+                .WithMany(x => x.LocationSet)
+                .HasForeignKey(x => x.IdRegion)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Location>()
+                .HasOne(x => x.CitySet)
+                .WithMany(x => x.LocationSet)
+                .HasForeignKey(x => x.IdCity)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+        }
+
     }
 }
