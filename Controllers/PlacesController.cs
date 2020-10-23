@@ -116,9 +116,18 @@ namespace OpenSundayApi.Controllers
     }
     #endregion
 
+        [HttpGet("Rating/{id}")]
+        public async Task<double> GetRating(long id)
+        {
+            var reviews = await _context.Reviews.ToListAsync();
+            var count = reviews.Where(x => x.IdPlace == id).Average(r => r.Rate);
+            return count;
+        }
+
     private bool PlaceExists(long id)
     {
       return _context.Places.Any(e => e.IdPlace == id);
     }
-  }
+
+    }
 }

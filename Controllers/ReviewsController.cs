@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -109,6 +110,13 @@ namespace OpenSundayApi.Controllers
       return review;
     }
     #endregion
+
+        [HttpGet("place/{id}")]
+        public async Task<IEnumerable<Review>> GetReviewsFromPlace(long id)
+        {
+            var reviews = await _context.Reviews.Include(x =>x.UserSet).ToListAsync();
+            return reviews.Where(x => x.IdPlace == id);
+        }
 
     private bool ReviewExists(long id)
     {

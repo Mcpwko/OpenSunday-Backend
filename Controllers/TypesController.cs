@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Schema;
 using opensunday_backend.Models;
 using OpenSundayApi.Models;
 using Type = opensunday_backend.Models.Type;
@@ -84,11 +86,18 @@ namespace OpenSundayApi.Controllers
     [HttpPost]
     public async Task<ActionResult<Type>> PostType(Type type)
     {
-      
-      _context.Types.Add(type);
-      await _context.SaveChangesAsync();
+            var types = await _context.Types.ToListAsync();
+            var typeExist = await _context.Types.AnyAsync(x => x.Name == type.Name);
 
-      return CreatedAtAction(nameof(GetType), new { id = type.IdType }, type);
+        if (typeExist != false)
+        {
+                return types.Where(x => x.Name == type.Name).First();
+        }
+
+        _context.Types.Add(type);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetType), new { id = type.IdType }, type);
     }
     #endregion
 
@@ -114,5 +123,5 @@ namespace OpenSundayApi.Controllers
     {
       return _context.Types.Any(e => e.IdType == id);
     }
-  }
+    }
 }

@@ -84,7 +84,15 @@ namespace OpenSundayApi.Controllers
     public async Task<ActionResult<Category>> PostCategory(Category category)
     {
 
-      _context.Categories.Add(category);
+    var categories = await _context.Categories.ToListAsync();
+    var categoryExist = await _context.Categories.AnyAsync(x => x.Name == category.Name);
+
+    if (categoryExist != false)
+    {
+        return categories.Where(x => x.Name == category.Name).First();
+    }
+
+            _context.Categories.Add(category);
       await _context.SaveChangesAsync();
 
       return CreatedAtAction(nameof(GetCategory), new { id = category.IdCategory }, category);
