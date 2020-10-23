@@ -7,6 +7,7 @@ namespace opensunday_backend.Models
         [Key]
         public long IdCity { get; set; }
         public string Name { get; set; }
+        public int Npa { get; set; }
 
         public virtual ICollection<Location> LocationSet { get; set; }
 
