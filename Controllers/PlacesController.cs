@@ -98,6 +98,56 @@ namespace OpenSundayApi.Controllers
     }
     #endregion
 
+ #region snippet_Insert
+    // POST: api/Places/insert
+    [HttpPost]
+    public async Task<ActionResult<Place>> InsertPlace(PlaceForm place)
+    {
+
+      var city = new City();
+      city.Name = place.city;
+      city.Npa = place.zip;
+
+      var insertedCity = PostCity(city);
+
+
+      var location = new Location();
+      
+      location.idCity = insertedCity.idCity;
+      location.lat = place.lat;
+      location.long = place.long;
+      location.address = place.address;
+      location.idRegion = place.idRegion;
+
+      var insertLocation = PostLocations(location);
+
+      var insertPlace = new Place();
+
+      // Add creator ID based on the Auth0 User ID found in the JWT token
+      insertPlace.Creator = User.Claims.First(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+      insertPlace.CreateAt = DateTime.Now;
+      insertPlace.Name = place.name;
+      insertPlace.Description = place.description;
+      insertPlace.Email = place.email;
+      insertPlace.Website = place.website;
+      insertPlace.PhoneNumber = place.phoneNumber;
+      insertPlace.IsOpenSunday = place.idOpenSunday;
+      insertPlace.IsOpenSpecialDay = place.isOpenSpecialDay;
+      insertPlace.IsVerified = place.isVerified;
+      insertPlace.IsAdvertised = place.isAdvertised;
+      insertPlace.IdLocation = insertLocation.idLocation;
+      insertPlace.IdCategory = place.idCategory;
+      insertPlace.IdType = place.idType;
+      
+
+      _context.Places.Add(insertPlace);
+      await _context.SaveChangesAsync();
+
+      return CreatedAtAction(nameof(GetPlace), new { id = insertPlace.IdPlace }, insertPlace);
+    }
+    #endregion
+
+
     #region snippet_Delete
     // DELETE: api/Places/5
     [HttpDelete("{id}")]

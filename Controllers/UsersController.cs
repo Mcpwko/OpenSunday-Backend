@@ -85,8 +85,16 @@ namespace OpenSundayApi.Controllers
     public async Task<ActionResult<User>> PostUser(User user)
     {
 
+    var userExist = await _context.Users.AnyAsync(x => x.IdAuth0 == user.IdAuth0);
+
+    if (userExist != false)
+    {
+        return Users.Where(x => x.IdAuth0 == user.IdAuth0).First();
+    }
+
       user.CreatedAt = DateTime.Now;
       user.Status = 0;
+
       _context.Users.Add(user);
       await _context.SaveChangesAsync();
 
