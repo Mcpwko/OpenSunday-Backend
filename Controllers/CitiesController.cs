@@ -83,8 +83,16 @@ namespace OpenSundayApi.Controllers
     [HttpPost]
     public async Task<ActionResult<City>> PostCity(City city)
     {
-      
-      _context.Cities.Add(city);
+
+            var cities = await _context.Cities.ToListAsync();
+            var cityExist = await _context.Cities.AnyAsync(x => x.Name == city.Name);
+
+            if (cityExist != false)
+            {
+                return cities.Where(x => x.Name == city.Name).First();
+            }
+
+            _context.Cities.Add(city);
       await _context.SaveChangesAsync();
 
       return CreatedAtAction(nameof(GetCity), new { id = city.IdCity }, city);

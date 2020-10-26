@@ -1,17 +1,16 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using opensunday_backend.Models;
+using OpenSundayApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using OpenSundayApi.Models;
 
 namespace OpenSundayApi.Controllers
 {
-  #region PlacesController
-  [Route("api/[controller]")]
+    #region PlacesController
+    [Route("api/[controller]")]
   [ApiController]
   public class PlacesController : ControllerBase
   {
@@ -100,26 +99,33 @@ namespace OpenSundayApi.Controllers
 
  #region snippet_Insert
     // POST: api/Places/insert
-    [HttpPost]
+    [HttpPost("insert")]
     public async Task<ActionResult<Place>> InsertPlace(PlaceForm place)
     {
 
       var city = new City();
       city.Name = place.city;
       city.Npa = place.zip;
-
-      var insertedCity = PostCity(city);
-
+            
+      var ctrlCity = new CitiesController(_context);
+      await ctrlCity.PostCity(city);
+            var cities = await _context.Cities.ToListAsync();
+            var insertedCity = cities.Where(x => x.Name == city.Name && x.Npa == city.Npa).First();
 
       var location = new Location();
       
-      location.idCity = insertedCity.idCity;
-      location.lat = place.lat;
-      location.long = place.long;
-      location.address = place.address;
-      location.idRegion = place.idRegion;
-
-      var insertLocation = PostLocations(location);
+      location.IdCity =  insertedCity.IdCity;
+      location.Lat = place.lat;
+      location.Long = place.Long;
+      location.Address = place.address;
+      location.IdRegion = place.idRegion;
+      var ctrlLocation = new LocationsController(_context);
+            await ctrlLocation.PostLocation(location);
+            var locations = await _context.Locations.ToListAsync();
+            var insertLocation = locations.Where(x => x.Address == location.Address 
+            && x.Lat == location.Lat
+            && x.Long == location.Long
+            && x.IdRegion == location.IdRegion).First();
 
       var insertPlace = new Place();
 
@@ -131,11 +137,11 @@ namespace OpenSundayApi.Controllers
       insertPlace.Email = place.email;
       insertPlace.Website = place.website;
       insertPlace.PhoneNumber = place.phoneNumber;
-      insertPlace.IsOpenSunday = place.idOpenSunday;
+      insertPlace.IsOpenSunday = place.isOpenSunday;
       insertPlace.IsOpenSpecialDay = place.isOpenSpecialDay;
       insertPlace.IsVerified = place.isVerified;
       insertPlace.IsAdvertised = place.isAdvertised;
-      insertPlace.IdLocation = insertLocation.idLocation;
+      insertPlace.IdLocation = insertLocation.IdLocation;
       insertPlace.IdCategory = place.idCategory;
       insertPlace.IdType = place.idType;
       
