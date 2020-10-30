@@ -45,7 +45,7 @@ namespace OpenSundayApi.Controllers
 
       return user.First();
     }
-    #endregion
+        #endregion
 
     #region snippet_Update
     // PUT: api/User/5

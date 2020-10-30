@@ -177,7 +177,12 @@ namespace OpenSundayApi.Controllers
         {
             var reviews = await _context.Reviews.ToListAsync();
             var count = reviews.Where(x => x.IdPlace == id).Average(r => r.Rate);
-            return count;
+            
+            if (count!= null)
+            {
+                return count;
+            }
+            return 0;
         }
 
     private bool PlaceExists(long id)
