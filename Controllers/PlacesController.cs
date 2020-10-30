@@ -176,11 +176,11 @@ namespace OpenSundayApi.Controllers
         public async Task<double> GetRating(long id)
         {
             var reviews = await _context.Reviews.ToListAsync();
-            var count = reviews.Where(x => x.IdPlace == id).Average(r => r.Rate);
+            var count = reviews.Where(x => x.IdPlace == id).Count();
             
-            if (count!= null)
+            if (count>0)
             {
-                return count;
+                return reviews.Where(x =>x.IdPlace ==id).Average(r => r.Rate);
             }
             return 0;
         }
