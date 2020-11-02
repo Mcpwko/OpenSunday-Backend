@@ -40,7 +40,8 @@ namespace OpenSundayApi.Controllers
 
             var check = users.Where(x => x.Pseudo.Equals(nickname));
 
-            if(check.Count()>0)
+
+            if(check!=null)
             return false;
             return true;
         }
