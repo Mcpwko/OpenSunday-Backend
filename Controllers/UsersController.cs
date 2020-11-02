@@ -35,7 +35,7 @@ namespace OpenSundayApi.Controllers
     public async Task<ActionResult<bool>> CheckPseudo(string nickname)
     {
 
-      var users = _context.Users.ToListAsync();
+      var users = await _context.Users.ToListAsync();
 
       var check = users.Where(x => x.pseudo.Equals(nickname));
 
