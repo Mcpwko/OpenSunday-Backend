@@ -32,7 +32,7 @@ namespace OpenSundayApi.Controllers
 
     #region checkPseudo
     // GET: api/Users/Check
-        [HttpGet("/check/{nickname}")]
+        [HttpGet("check/{nickname}")]
         public async Task<bool> CheckPseudo(string nickname)
         {
 
