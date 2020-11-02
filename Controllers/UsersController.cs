@@ -30,6 +30,23 @@ namespace OpenSundayApi.Controllers
       return await _context.Users.Include(user => user.UserTypeSet).ToListAsync();
     }
 
+    #region checkPseudo
+    // GET: api/Users/Check
+        [HttpGet("check/{nickname}")]
+        public async Task<bool> CheckPseudo(string nickname)
+        {
+
+            var users = await _context.Users.ToListAsync();
+
+            var check = users.Where(x => x.Pseudo.Equals(nickname));
+
+            if(check.Count()>0)
+            return false;
+            return true;
+        }
+    #endregion
+
+
     #region snippet_GetByID
     // GET: api/Users/email
     [HttpGet("{email}")]
@@ -45,7 +62,7 @@ namespace OpenSundayApi.Controllers
 
       return user.First();
     }
-        #endregion
+    #endregion
 
         #region snippet_Update
         // PUT: api/User/5
@@ -79,19 +96,22 @@ namespace OpenSundayApi.Controllers
     }
     #endregion
 
+
+
+
     #region snippet_Create
     // POST: api/Users
     [HttpPost]
     public async Task<ActionResult<User>> PostUser(User user)
     {
 
-    var userExist = await _context.Users.AnyAsync(x => x.IdAuth0 == user.IdAuth0);
+    /*var userExist = await _context.Users.AnyAsync(x => x.IdAuth0 == user.IdAuth0);
     var users = await _context.Users.ToListAsync();
 
     if (userExist != false)
     {
         return users.Where(x => x.IdAuth0 == user.IdAuth0).First();
-    }
+    }*/
 
       user.CreatedAt = DateTime.Now;
       user.Status = 0;
