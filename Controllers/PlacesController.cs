@@ -52,14 +52,30 @@ namespace OpenSundayApi.Controllers
     #region snippet_Update
     // PUT: api/Place/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutPlace(long id, Place place)
+    public async Task<IActionResult> PutPlace(long id, PlaceForm place)
     {
-      if (id != place.IdPlace)
+      if (id != place.idPlace)
       {
         return BadRequest();
       }
+            var oldPlace = await _context.Places.FindAsync(id);
+            oldPlace.IdCategory = place.idCategory;
+            oldPlace.IdType = place.idType;
+            oldPlace.IsAdvertised = place.isAdvertised;
+            oldPlace.IsVerified = place.isVerified;
+            oldPlace.IsOpenSpecialDay = place.isOpenSpecialDay;
+            oldPlace.IsOpenSunday = place.isOpenSunday;
+            oldPlace.Name = place.name;
+            oldPlace.Description = place.description;
+            oldPlace.Email = place.email;
+            oldPlace.Website = place.website;
+            oldPlace.PhoneNumber = place.phoneNumber;
 
-      _context.Entry(place).State = EntityState.Modified;
+
+
+
+
+      _context.Entry(oldPlace).State = EntityState.Modified;
 
       try
       {

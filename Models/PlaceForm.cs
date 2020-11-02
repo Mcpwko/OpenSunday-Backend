@@ -7,6 +7,7 @@ using Type = opensunday_backend.Models.Type;
 
 public class PlaceForm
 {
+    public long idPlace { get; set; }
     public string name { get; set; }
     public string description { get; set; }
     public string email { get; set; }

@@ -47,9 +47,9 @@ namespace OpenSundayApi.Controllers
     }
         #endregion
 
-    #region snippet_Update
-    // PUT: api/User/5
-    [HttpPut("{id}")]
+        #region snippet_Update
+        // PUT: api/User/5
+        [HttpPut("{id}")]
     public async Task<IActionResult> PutUser(long id, User user)
     {
       if (id != user.IdUser)
@@ -101,11 +101,27 @@ namespace OpenSundayApi.Controllers
 
       return CreatedAtAction(nameof(GetUser), new { id = user.IdUser }, user);
     }
-    #endregion
+        #endregion
 
-    #region snippet_Delete
-    // DELETE: api/Users/5
-    [HttpDelete("{id}")]
+        #region checkPseudo
+        // GET: api/Users/Check
+        [HttpGet("check/{nickname}")]
+        public async Task<bool> CheckPseudo(string nickname)
+        {
+
+            var users = await _context.Users.ToListAsync();
+
+            var check = users.Where(x => x.Pseudo.Equals(nickname));
+
+            if (check.Count() > 0)
+                return false;
+            return true;
+        }
+        #endregion
+
+        #region snippet_Delete
+        // DELETE: api/Users/5
+        [HttpDelete("{id}")]
     public async Task<ActionResult<User>> DeleteUser(long id)
     {
       var user = await _context.Users.FindAsync(id);
