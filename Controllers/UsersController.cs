@@ -37,7 +37,7 @@ namespace OpenSundayApi.Controllers
 
       var users = _context.Users.ToListAsync();
 
-      var check = users.Where(x => x.pseudo == nickname)
+      var check = users.Where(x => x.pseudo.Equals(nickname));
 
       return check;
     }
