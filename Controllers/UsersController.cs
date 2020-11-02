@@ -30,6 +30,19 @@ namespace OpenSundayApi.Controllers
       return await _context.Users.Include(user => user.UserTypeSet).ToListAsync();
     }
 
+    // GET: api/Users/Check
+    [HttpGet("/check")]
+    public async Task<ActionResult<bool>> CheckPseudo(string nickname)
+    {
+
+      var users = _context.Users.ToListAsync();
+
+      var check = users.Where(x => x.pseudo == nickname)
+
+
+      return check;
+    }
+
     #region snippet_GetByID
     // GET: api/Users/email
     [HttpGet("{email}")]
@@ -78,6 +91,9 @@ namespace OpenSundayApi.Controllers
       return NoContent();
     }
     #endregion
+
+
+
 
     #region snippet_Create
     // POST: api/Users
