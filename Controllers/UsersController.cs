@@ -38,10 +38,10 @@ namespace OpenSundayApi.Controllers
 
             var users = await _context.Users.ToListAsync();
 
-            var check = users.Where(x => x.Pseudo.Equals(nickname));
+            var check = users.Count(x => x.Pseudo.Equals(nickname));
 
 
-            if(check.Any())
+            if(check>0)
             return false;
             return true;
         }
