@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using opensunday_backend.Models;
+using OpenSundayApi.Controllers;
 
 namespace OpenSundayApi.Models
 {
@@ -16,6 +17,7 @@ namespace OpenSundayApi.Models
         public DbSet<Type> Types { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

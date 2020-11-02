@@ -13,6 +13,7 @@ namespace opensunday_backend.Models
         [Key]
         public long IdUser { get; set; }
         public string Email { get; set; }
+        public string Pseudo { get; set; }
         public DateTime CreatedAt { get; set; }
         public int Status { get; set; }
         public string IdAuth0 { get; set; }
@@ -21,6 +22,7 @@ namespace opensunday_backend.Models
 
         [JsonIgnore]
         public virtual ICollection<Review> ReviewSet { get; set; }
+        public virtual ICollection<Report> ReportSet { get; set; }
 
         [ForeignKey("UserTypeSet")]
         public long IdUserType { get; set; }

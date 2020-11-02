@@ -22,6 +22,7 @@ public class Place
     public string Creator { get; set; }
 
     public virtual ICollection<Review> ReviewSet { get; set; }
+    public virtual ICollection<Report> ReportSet { get; set; }
 
     [ForeignKey("LocationSet")]
     public long IdLocation { get; set; }
