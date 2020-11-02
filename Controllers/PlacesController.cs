@@ -71,11 +71,35 @@ namespace OpenSundayApi.Controllers
             oldPlace.Website = place.website;
             oldPlace.PhoneNumber = place.phoneNumber;
 
+            //City
+            var city = new City();
+            city.Npa = place.zip;
+            city.Name = place.city;
+            var ctrlCity = new CitiesController(_context);
+            await ctrlCity.PostCity(city);
+            var cities = await _context.Cities.ToListAsync();
+            var insertedCity = cities.Where(x => x.Name == city.Name && x.Npa == city.Npa).First();
+
+            //Location
+            var oldLocation = await _context.Locations.FindAsync(oldPlace.IdLocation);
+            oldLocation.IdCity = insertedCity.IdCity;
+            oldLocation.IdRegion = place.idRegion;
+            oldLocation.Lat = place.lat;
+            oldLocation.Long = place.Long;
+            oldLocation.Address = place.address;
+            var ctrlLocation = new LocationsController(_context);
+            await ctrlLocation.PostLocation(oldLocation);
+            var locations = await _context.Locations.ToListAsync();
+            var insertedLocation = locations.Where(x => x.Address == oldLocation.Address && x.Lat == oldLocation.Lat
+            && x.Long == oldLocation.Long).First();
+
+            oldPlace.IdLocation = insertedLocation.IdLocation;
 
 
 
 
-      _context.Entry(oldPlace).State = EntityState.Modified;
+
+            _context.Entry(oldPlace).State = EntityState.Modified;
 
       try
       {
