@@ -55,7 +55,7 @@ namespace OpenSundayApi.Controllers
     [HttpGet("{email}")]
     public async Task<ActionResult<User>> GetUser(string email)
     {
-      var users = await _context.Users.ToListAsync();
+      var users = await _context.Users.Include(user => user.ReviewSet).ToListAsync();
       var user = users.Where(x => x.Email.Equals(email));
 
       if (user == null)
