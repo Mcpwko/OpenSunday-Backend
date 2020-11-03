@@ -31,7 +31,8 @@ namespace OpenSundayApi.Controllers
                 .Include(place => place.LocationSet).ThenInclude(location => location.CitySet)
                 .Include(place => place.ReviewSet)
                 .Include(place => place.TypeSet)
-                .Include(place => place.CategorySet).ToListAsync(); ;
+                .Include(place => place.ReportSet)
+                .Include(place => place.CategorySet).ToListAsync();
     }
 
     #region snippet_GetByID
