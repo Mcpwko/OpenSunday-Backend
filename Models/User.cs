@@ -19,8 +19,6 @@ namespace opensunday_backend.Models
         public string IdAuth0 { get; set; }
 
         
-
-        [JsonIgnore]
         public virtual ICollection<Review> ReviewSet { get; set; }
         public virtual ICollection<Report> ReportSet { get; set; }
 
