@@ -52,7 +52,6 @@ namespace OpenSundayApi.Controllers
 
     #region snippet_Update
     // PUT: api/Places/5
-    [EnableCors("AllowOrigin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> PutPlace(long id, PlaceForm place)
     {

@@ -34,7 +34,6 @@ namespace OpenSundayApi.Controllers
 
         #region checkPseudo
         // GET: api/Users/Check
-        [EnableCors("AllowOrigin")]
         [HttpGet("check/{nickname}")]
         public async Task<bool> CheckPseudo(string nickname)
         {
