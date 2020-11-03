@@ -14,5 +14,7 @@ namespace opensunday_backend.Models
         public string Name { get; set; }
 
         public virtual ICollection<Place> PlaceSet { get; set; }
+
+        public virtual ICollection<Category> CategorySet { get; set; }
     }
 }

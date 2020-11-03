@@ -13,6 +13,7 @@ namespace opensunday_backend.Models
         public bool IsForDelete { get; set; }
         public bool IsForEdit { get; set; }
         public DateTime ReportDate { get; set; }
+        public bool Status { get; set; }
 
         [ForeignKey("UserSet")]
         public long IdUser { get; set; }

@@ -18,7 +18,6 @@ public class Place
     public bool IsOpenSunday { get; set; }
     public bool IsOpenSpecialDay { get; set; }
     public bool IsVerified { get; set; }
-    public bool IsAdvertised { get; set; }
     public string Creator { get; set; }
 
     public virtual ICollection<Review> ReviewSet { get; set; }
