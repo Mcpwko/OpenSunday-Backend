@@ -89,7 +89,7 @@ namespace OpenSundayApi.Controllers
             oldLocation.Long = place.Long;
             oldLocation.Address = place.address;
             var ctrlLocation = new LocationsController(_context);
-            await ctrlLocation.PostLocation(oldLocation);
+            await ctrlLocation.PutLocation(oldLocation.IdLocation, oldLocation);
             var locations = await _context.Locations.ToListAsync();
             var insertedLocation = locations.Where(x => x.Address == oldLocation.Address && x.Lat == oldLocation.Lat
             && x.Long == oldLocation.Long).First();
