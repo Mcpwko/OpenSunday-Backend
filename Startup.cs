@@ -34,7 +34,8 @@ namespace opensunday_backend
             {
                 builder.AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    .AllowAnyHeader()
+                    .AllowCredentials();
             }));
 
             services.AddControllers().AddNewtonsoftJson(options =>

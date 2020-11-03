@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using opensunday_backend.Models;
@@ -50,7 +51,8 @@ namespace OpenSundayApi.Controllers
     #endregion
 
     #region snippet_Update
-    // PUT: api/Place/5
+    // PUT: api/Places/5
+    [EnableCors("AllowOrigin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> PutPlace(long id, PlaceForm place)
     {
