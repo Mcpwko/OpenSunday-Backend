@@ -38,7 +38,7 @@ namespace OpenSundayApi.Models
             modelBuilder.Entity<Category>()
                 .HasOne(x => x.TypeSet)
                 .WithMany(x => x.CategorySet)
-                .HasForeignKey(x => x.IdCategory)
+                .HasForeignKey(x => x.IdType)
                 .OnDelete(DeleteBehavior.ClientNoAction);
 
 
