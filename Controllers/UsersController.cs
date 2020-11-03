@@ -33,11 +33,10 @@ namespace OpenSundayApi.Controllers
 
 
     #region checkPseudo
-    // GET: api/Users/check/pseudo
+    // GET: api/Users/Check
     [HttpGet("Check/{nickname}")]
     public async Task<double> CheckPseudo(string nickname)
     {
-
         var users = await _context.Users.ToListAsync();
 
         return users.Where(x => x.Pseudo.Equals(nickname)).Count();
