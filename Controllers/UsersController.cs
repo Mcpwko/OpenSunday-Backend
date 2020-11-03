@@ -40,15 +40,7 @@ namespace OpenSundayApi.Controllers
 
         var users = await _context.Users.ToListAsync();
 
-        var count = users.Where(x => x.Pseudo.Equals(nickname)).Count();
-
-
-            if (count > 0)
-            {
-                return 1;
-            }
-        
-        return 0;
+        return users.Where(x => x.Pseudo.Equals(nickname)).Count();
     }
 #endregion
 
