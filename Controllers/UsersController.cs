@@ -38,10 +38,9 @@ namespace OpenSundayApi.Controllers
     public async Task<double> CheckPseudo(string nickname)
     {
         var users = await _context.Users.ToListAsync();
-            Console.WriteLine("USERS NUMBERS : " + users.Count());
         foreach(var user in users)
             {
-                if (user.Pseudo.Equals(nickname))
+                if (user.Pseudo!=null && user.Pseudo.Equals(nickname))
                 {
                     return 1;
                 }
