@@ -30,6 +30,40 @@ namespace OpenSundayApi.Controllers
                 .Include(report => report.UserSet).ToListAsync();
     }
 
+        [HttpGet("/Validate/{id}")]
+        public async Task<ActionResult<Report>> ValidateReport(long id)
+        {
+            var report = await _context.Reports.FindAsync(id);
+            if (report != null)
+            {
+                report.Status = false;
+
+
+                _context.Entry(report).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ReportExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return report;
+            }
+            return NotFound();
+        }
+
+
+
+
     #region snippet_GetByID
     // GET: api/Reports/5
     [HttpGet("{id}")]
