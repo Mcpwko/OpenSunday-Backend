@@ -30,7 +30,7 @@ namespace OpenSundayApi.Controllers
                 .Include(report => report.UserSet).ToListAsync();
     }
 
-        [HttpGet("/Validate/{id}")]
+        [HttpGet("Validate/{id}")]
         public async Task<ActionResult<Report>> ValidateReport(long id)
         {
             var report = await _context.Reports.FindAsync(id);
