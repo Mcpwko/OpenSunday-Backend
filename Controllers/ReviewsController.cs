@@ -22,18 +22,20 @@ namespace OpenSundayApi.Controllers
     {
       _context = context;
     }
-    #endregion
+        #endregion
 
     // GET: api/Reviews
+    #region GetAllReviews
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
     {
       return await _context.Reviews.Include(review => review.PlaceSet)
                 .Include(review => review.UserSet).ToListAsync();
     }
+        #endregion
 
-    #region snippet_GetByID
     // GET: api/Reviews/5
+    #region snippet_GetByID
     [HttpGet("{id}")]
     public async Task<ActionResult<Review>> GetReview(long id)
     {
@@ -46,10 +48,10 @@ namespace OpenSundayApi.Controllers
 
       return review;
     }
-    #endregion
+        #endregion
 
+    // PUT: api/Reviews/5
     #region snippet_Update
-    // PUT: api/Review/5
     [HttpPut("{id}")]
     public async Task<IActionResult> PutReview(long id, Review review)
     {
@@ -78,10 +80,10 @@ namespace OpenSundayApi.Controllers
 
       return NoContent();
     }
-    #endregion
+        #endregion
 
-    #region snippet_Create
     // POST: api/Reviews
+    #region snippet_Create
     [HttpPost]
     public async Task<ActionResult<Review>> PostReview(Review review)
     {
@@ -91,10 +93,10 @@ namespace OpenSundayApi.Controllers
 
       return CreatedAtAction(nameof(GetReview), new { id = review.IdReview }, review);
     }
-    #endregion
+        #endregion
 
-    #region snippet_Delete
     // DELETE: api/Reviews/5
+    #region snippet_Delete
     [HttpDelete("{id}")]
     public async Task<ActionResult<Review>> DeleteReview(long id)
     {
@@ -109,14 +111,17 @@ namespace OpenSundayApi.Controllers
 
       return review;
     }
-    #endregion
+        #endregion
 
-        [HttpGet("place/{id}")]
-        public async Task<IEnumerable<Review>> GetReviewsFromPlace(long id)
-        {
-            var reviews = await _context.Reviews.Include(x =>x.UserSet).ToListAsync();
-            return reviews.Where(x => x.IdPlace == id);
-        }
+    // GET : api/Reviews/place/5
+    #region GetAllReviewsForaPlace
+    [HttpGet("place/{id}")]
+    public async Task<IEnumerable<Review>> GetReviewsFromPlace(long id)
+    {
+        var reviews = await _context.Reviews.Include(x =>x.UserSet).ToListAsync();
+        return reviews.Where(x => x.IdPlace == id);
+    }
+    #endregion
 
     private bool ReviewExists(long id)
     {

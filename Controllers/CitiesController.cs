@@ -21,17 +21,19 @@ namespace OpenSundayApi.Controllers
     {
       _context = context;
     }
-    #endregion
+        #endregion
 
     // GET: api/Cities
+    #region GetAllCities
     [HttpGet]
     public async Task<ActionResult<IEnumerable<City>>> GetCities()
     {
       return await _context.Cities.Include(city =>city.LocationSet).ToListAsync();
     }
+        #endregion
 
-    #region snippet_GetByID
     // GET: api/Cities/5
+    #region snippet_GetByID
     [HttpGet("{id}")]
     public async Task<ActionResult<City>> GetCity(long id)
     {
@@ -44,10 +46,10 @@ namespace OpenSundayApi.Controllers
 
       return city;
     }
-    #endregion
+        #endregion
 
-    #region snippet_Update
     // PUT: api/City/5
+    #region snippet_Update
     [HttpPut("{id}")]
     public async Task<IActionResult> PutCity(long id, City city)
     {
@@ -76,10 +78,10 @@ namespace OpenSundayApi.Controllers
 
       return NoContent();
     }
-    #endregion
+        #endregion
 
-    #region snippet_Create
     // POST: api/Cities
+    #region snippet_Create
     [HttpPost]
     public async Task<ActionResult<City>> PostCity(City city)
     {
@@ -97,10 +99,10 @@ namespace OpenSundayApi.Controllers
 
       return CreatedAtAction(nameof(GetCity), new { id = city.IdCity }, city);
     }
-    #endregion
+        #endregion
 
-    #region snippet_Delete
     // DELETE: api/Cities/5
+    #region snippet_Delete
     [HttpDelete("{id}")]
     public async Task<ActionResult<City>> DeleteCity(long id)
     {

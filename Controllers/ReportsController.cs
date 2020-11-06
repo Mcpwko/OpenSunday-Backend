@@ -20,52 +20,55 @@ namespace OpenSundayApi.Controllers
     {
       _context = context;
     }
-    #endregion
+        #endregion
 
     // GET: api/Reports
+    #region GetAllReports
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Report>>> GetReports()
     {
             return await _context.Reports.Include(report => report.PlaceSet)
                 .Include(report => report.UserSet).ToListAsync();
     }
+        #endregion
 
-        [HttpGet("Validate/{id}")]
-        public async Task<ActionResult<Report>> ValidateReport(long id)
+    //GET : api/Reports/Validate/1
+    //Method to allow Admin to verify a place
+    #region VerifyPlace
+    [HttpGet("Validate/{id}")]
+    public async Task<ActionResult<Report>> ValidateReport(long id)
+    {
+        var report = await _context.Reports.FindAsync(id);
+        if (report != null)
         {
-            var report = await _context.Reports.FindAsync(id);
-            if (report != null)
+            report.Status = false;
+
+
+            _context.Entry(report).State = EntityState.Modified;
+
+            try
             {
-                report.Status = false;
-
-
-                _context.Entry(report).State = EntityState.Modified;
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReportExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return report;
+                await _context.SaveChangesAsync();
             }
-            return NotFound();
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ReportExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return report;
         }
+        return NotFound();
+    }
+        #endregion
 
-
-
-
-    #region snippet_GetByID
     // GET: api/Reports/5
+    #region snippet_GetByID
     [HttpGet("{id}")]
     public async Task<ActionResult<Report>> GetReport(long id)
     {
@@ -78,11 +81,11 @@ namespace OpenSundayApi.Controllers
 
       return report;
     }
-    #endregion
+        #endregion
 
-    #region snippet_Create
-    // POST: api/Reports
-    [HttpPost]
+   // POST: api/Reports
+   #region snippet_Create
+   [HttpPost]
     public async Task<ActionResult<Report>> PostReport(Report report)
     {
       report.ReportDate = DateTime.Now;
@@ -92,10 +95,10 @@ namespace OpenSundayApi.Controllers
 
       return CreatedAtAction(nameof(GetReport), new { id = report.IdReport }, report);
     }
-    #endregion
+        #endregion
 
-    #region snippet_Delete
     // DELETE: api/Reports/5
+    #region snippet_Delete
     [HttpDelete("{id}")]
     public async Task<ActionResult<Report>> DeleteReport(long id)
     {

@@ -21,17 +21,19 @@ namespace OpenSundayApi.Controllers
     {
       _context = context;
     }
-    #endregion
+        #endregion
 
     // GET: api/UserTypes
+    #region GetAllUserTypes
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserType>>> GetUserTypes()
     {
       return await _context.UserTypes.ToListAsync();
     }
+        #endregion
 
-    #region snippet_GetByID
     // GET: api/UserTypes/5
+    #region snippet_GetByID
     [HttpGet("{id}")]
     public async Task<ActionResult<UserType>> GetUserType(long id)
     {
@@ -44,10 +46,10 @@ namespace OpenSundayApi.Controllers
 
       return userType;
     }
-    #endregion
+        #endregion
 
-    #region snippet_Create
     // POST: api/UserTypes
+    #region snippet_Create
     [HttpPost]
     public async Task<ActionResult<UserType>> PostUserTypes(UserType userType)
     {

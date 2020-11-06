@@ -21,17 +21,19 @@ namespace OpenSundayApi.Controllers
     {
       _context = context;
     }
-    #endregion
+        #endregion
 
     // GET: api/Categories
+    #region GetAllCategories
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
     {
       return await _context.Categories.ToListAsync();
     }
+        #endregion
 
-    #region snippet_GetByID
     // GET: api/Categories/5
+    #region snippet_GetByID
     [HttpGet("{id}")]
     public async Task<ActionResult<Category>> GetCategory(long id)
     {
@@ -44,10 +46,10 @@ namespace OpenSundayApi.Controllers
 
       return category;
     }
-    #endregion
+        #endregion
 
-    #region snippet_Update
     // PUT: api/Category/5
+    #region snippet_Update
     [HttpPut("{id}")]
     public async Task<IActionResult> PutCategory(long id, Category category)
     {
@@ -76,10 +78,10 @@ namespace OpenSundayApi.Controllers
 
       return NoContent();
     }
-    #endregion
+        #endregion
 
-    #region snippet_Create
     // POST: api/Cateogries
+    #region snippet_Create
     [HttpPost]
     public async Task<ActionResult<Category>> PostCategory(Category category)
     {
@@ -97,10 +99,10 @@ namespace OpenSundayApi.Controllers
 
       return CreatedAtAction(nameof(GetCategory), new { id = category.IdCategory }, category);
     }
-    #endregion
+        #endregion
 
-    #region snippet_Delete
     // DELETE: api/Categories/5
+    #region snippet_Delete
     [HttpDelete("{id}")]
     public async Task<ActionResult<Category>> DeleteCategory(long id)
     {

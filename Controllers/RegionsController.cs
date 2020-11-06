@@ -21,17 +21,19 @@ namespace OpenSundayApi.Controllers
     {
       _context = context;
     }
-    #endregion
+        #endregion
 
     // GET: api/Regions
+    #region GetAllRegions
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Region>>> GetRegions()
     {
-      return await _context.Regions.Include(region =>region.LocationSet).ToListAsync();
+        return await _context.Regions.Include(region =>region.LocationSet).ToListAsync();
     }
+        #endregion
 
-    #region snippet_GetByID
     // GET: api/Regions/5
+    #region snippet_GetByID
     [HttpGet("{id}")]
     public async Task<ActionResult<Region>> GetRegion(long id)
     {
@@ -44,10 +46,10 @@ namespace OpenSundayApi.Controllers
 
       return region;
     }
-    #endregion
+        #endregion
 
-    #region snippet_Update
     // PUT: api/Region/5
+    #region snippet_Update
     [HttpPut("{id}")]
     public async Task<IActionResult> PutRegion(long id, Region region)
     {
@@ -76,10 +78,10 @@ namespace OpenSundayApi.Controllers
 
       return NoContent();
     }
-    #endregion
+        #endregion
 
-    #region snippet_Create
     // POST: api/Regions
+    #region snippet_Create
     [HttpPost]
     public async Task<ActionResult<Region>> PostRegion(Region region)
     {
@@ -89,10 +91,10 @@ namespace OpenSundayApi.Controllers
 
       return CreatedAtAction(nameof(GetRegion), new { id = region.IdRegion }, region);
     }
-    #endregion
+        #endregion
 
-    #region snippet_Delete
     // DELETE: api/Regions/5
+    #region snippet_Delete
     [HttpDelete("{id}")]
     public async Task<ActionResult<Region>> DeleteRegion(long id)
     {

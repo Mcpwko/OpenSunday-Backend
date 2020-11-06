@@ -22,18 +22,19 @@ namespace OpenSundayApi.Controllers
     {
       _context = context;
     }
-    #endregion
+        #endregion
 
     // GET: api/Users
+    #region GetAllUsers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
       return await _context.Users.Include(user => user.UserTypeSet).ToListAsync();
     }
+        #endregion
 
-
+    // GET: api/Users/Check/nickname
     #region checkPseudo
-    // GET: api/Users/Check
     [HttpGet("Check/{nickname}")]
     public async Task<double> CheckPseudo(string nickname)
     {
@@ -47,11 +48,10 @@ namespace OpenSundayApi.Controllers
             }
         return 0;
     }
-#endregion
+        #endregion
 
-
-    #region snippet_GetByID
     // GET: api/Users/email
+    #region snippet_GetByEmail
     [HttpGet("{email}")]
     public async Task<ActionResult<User>> GetUser(string email)
     {
@@ -66,11 +66,11 @@ namespace OpenSundayApi.Controllers
 
       return user.First();
     }
-    #endregion
+        #endregion
 
-        #region snippet_Update
-        // PUT: api/User/5
-        [HttpPut("{id}")]
+    // PUT: api/Users/5
+    #region snippet_Update
+    [HttpPut("{id}")]
     public async Task<IActionResult> PutUser(long id, User user)
     {
       if (id != user.IdUser)
@@ -98,13 +98,10 @@ namespace OpenSundayApi.Controllers
 
       return NoContent();
     }
-    #endregion
+        #endregion
 
-
-
-
-    #region snippet_Create
     // POST: api/Users
+    #region snippet_Create
     [HttpPost]
     public async Task<ActionResult<User>> PostUser(User user)
     {
@@ -127,9 +124,9 @@ namespace OpenSundayApi.Controllers
     }
         #endregion
 
-        #region snippet_Delete
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
+    // DELETE: api/Users/5
+    #region snippet_Delete
+    [HttpDelete("{id}")]
     public async Task<ActionResult<User>> DeleteUser(long id)
     {
       var user = await _context.Users.FindAsync(id);
@@ -143,40 +140,44 @@ namespace OpenSundayApi.Controllers
 
       return user;
     }
+        #endregion
+
+    //Ban a user
+    //GET: /api/Users/Ban/5
+    #region BanUser
+    [HttpGet("Ban/{id}")]
+    public async Task<ActionResult<User>> BanUser(long id)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user != null)
+        {
+            user.Status = 1;
+
+
+            _context.Entry(user).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return user;
+        }
+        return NotFound();
+    }
     #endregion
 
-        [HttpGet("Ban/{id}")]
-        public async Task<ActionResult<User>> BanUser(long id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            if (user != null)
-            {
-                user.Status = 1;
-
-
-                _context.Entry(user).State = EntityState.Modified;
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return user;
-            }
-            return NotFound();
-        }
-
-    private bool UserExists(long id)
+        private bool UserExists(long id)
     {
       return _context.Users.Any(e => e.IdUser == id);
     }
